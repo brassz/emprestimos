@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/components/AuthProvider'
 import { 
@@ -19,6 +19,11 @@ export default function Home() {
   const router = useRouter()
   const { user, loading } = useAuth()
   const [isHovered, setIsHovered] = useState(false)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const handleGetStarted = () => {
     if (user) {
@@ -60,7 +65,8 @@ export default function Home() {
     "Atualizações gratuitas"
   ]
 
-  if (loading) {
+  // Evitar problemas de hidratação
+  if (!mounted || loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
