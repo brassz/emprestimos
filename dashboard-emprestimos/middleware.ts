@@ -53,14 +53,8 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL('/dashboard', request.url))
     }
 
-    // Redirecionar raiz para dashboard se autenticado, senão para login
-    if (request.nextUrl.pathname === '/') {
-      if (user) {
-        return NextResponse.redirect(new URL('/dashboard', request.url))
-      } else {
-        return NextResponse.redirect(new URL('/login', request.url))
-      }
-    }
+    // Permitir acesso à página raiz (home page) sem redirecionamento
+    // A página raiz agora é uma landing page que o usuário pode ver livremente
 
     return supabaseResponse
   } catch (error) {
